@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title></title>
-<#include "/jeecms_sys/head.html"/>
+<#include "/cms_sys/head.html"/>
 <script type="text/javascript">
 function getTableForm() {
 	return document.getElementById('tableForm');
@@ -22,7 +22,7 @@ function getTableForm() {
 <@p.table value=pagination;cmsStatistic,i,has_next><#rt/>
 	<@p.column code="statistic.function.refererWebSite"><#if cmsStatistic.description!="">${cmsStatistic.description!}<#else><@s.m "statistic.refererWebSite.inputStraightOrLableImport"/></#if></@p.column><#t/>
 	<@p.column code="statistic.refererWebSite.number">${cmsStatistic.count}</@p.column><#t/>
-	<@p.column code="statistic.percent"><img src="${base}/res/jeecms/img/admin/vote_bar.gif" width="${cmsStatistic.barWidth}" height="10px" border="0"/>${cmsStatistic.percent}</@p.column><#t/>
+	<@p.column code="statistic.percent"><img src="${base}/res/cms/img/admin/vote_bar.gif" width="${cmsStatistic.barWidth}" height="10px" border="0"/>${cmsStatistic.percent}</@p.column><#t/>
 </@p.table>
 </form>
 </div>

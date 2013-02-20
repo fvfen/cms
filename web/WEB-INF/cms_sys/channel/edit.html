@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title></title>
-<#include "/jeecms_sys/head.html"/>
+<#include "/cms_sys/head.html"/>
 <script type="text/javascript">
 $(function() {
 	$("#jvForm").validate();
@@ -19,16 +19,16 @@ $(function() {
 <body>
 <#include "/common/image_upload.html"/>
 <div class="box-positon">
-	<div class="rpos"><@s.m "global.position"/>:  <@s.m "channel.function"/> - <@s.m "global.edit"/></div>
+	<div class="rpos"><@s.text name= "global.position"/>:  <@s.text name= "channel.function"/> - <@s.text name= "global.edit"/></div>
 	<form class="ropt">
 		<input type="hidden" id="root" name="root" value="${channel.id}"/>
 		<select name="modelId" onchange="if(this.options[this.selectedIndex].value!=''){this.form.action='v_add.do';this.form.submit();}">
-			<option>--<@s.m "channel.addChild"/>--</option>
+			<option>--<@s.text name= "channel.addChild"/>--</option>
 			<#list modelList as model>
 			<option value="${model.id}">${model.name}</option>
 			</#list>
 		</select>
-&nbsp;	<input type="submit" value="<@s.m "global.backToList"/>" onclick="$('#root').val('${(channel.parent.id)!}');this.form.action='v_list.do';" class="return-button"/>
+&nbsp;	<input type="submit" value="<@s.text name= "global.backToList"/>" onclick="$('#root').val('${(channel.parent.id)!}');this.form.action='v_list.do';" class="return-button"/>
 	</form>
 	<div class="clear"></div>
 </div>
@@ -37,7 +37,7 @@ $(function() {
 <@p.form id="jvForm" action="o_update.do" labelWidth="10">
 <@p.td colspan="1" width="50" label="channel.parent">
 	<@p.select name="parentId" list=channelList value=(channel.parent.id)! listKey="id" listValue="name" listDeep="deep" headerKey="" headerValue="channel.top"/>
-	<#--<#if channel.parent??>${channel.parent.name}<#else><@s.m "channel.top"/></#if>-->
+	<#--<#if channel.parent??>${channel.parent.name}<#else><@s.text name= "channel.top"/></#if>-->
 </@p.td>
 <@p.td colspan="1" width="50" label="channel.model">${channel.model.name}</@p.td><@p.tr/>
 <#assign count=0/>
@@ -68,16 +68,16 @@ $(function() {
 
 <#elseif item.field=="channelStatic">
 <@p.td label=item.label colspan="2" width="100">
-<label><input type="checkbox" onclick="$('#staticChannel').val(this.checked)"<#if channel.staticChannel> checked="checked"</#if>/><@s.m "channel.staticOn"/><input type="hidden" id="staticChannel" name="staticChannel" value="${channel.staticChannel?string('true','false')}"/></label>
+<label><input type="checkbox" onclick="$('#staticChannel').val(this.checked)"<#if channel.staticChannel> checked="checked"</#if>/><@s.text name= "channel.staticOn"/><input type="hidden" id="staticChannel" name="staticChannel" value="${channel.staticChannel?string('true','false')}"/></label>
 <input type="text" name="channelRule" value="${channel.channelRule!}" style="width:220px"/>
-<label><input type="checkbox" onclick="$('#accessByDir').val(this.checked)"<#if channel.accessByDir> checked="checked"</#if>/><@s.m "channel.accessByDir"/><input type="hidden" id="accessByDir" name="accessByDir" value="${channel.accessByDir?string('true','false')}"/></label>
-<label><input type="checkbox" onclick="$('#listChild').val(this.checked)"<#if channel.listChild> checked="checked"</#if>/><@s.m "channel.listChild"/><input type="hidden" id="listChild" name="listChild" value="${channel.listChild?string('true','false')}"/></label>
-&nbsp;<@s.m "channel.pageSize"/>:<input type="text" name="pageSize" value="${channel.pageSize!}" style="width:40px" class="digits" maxlength="5"/>
+<label><input type="checkbox" onclick="$('#accessByDir').val(this.checked)"<#if channel.accessByDir> checked="checked"</#if>/><@s.text name= "channel.accessByDir"/><input type="hidden" id="accessByDir" name="accessByDir" value="${channel.accessByDir?string('true','false')}"/></label>
+<label><input type="checkbox" onclick="$('#listChild').val(this.checked)"<#if channel.listChild> checked="checked"</#if>/><@s.text name= "channel.listChild"/><input type="hidden" id="listChild" name="listChild" value="${channel.listChild?string('true','false')}"/></label>
+&nbsp;<@s.text name= "channel.pageSize"/>:<input type="text" name="pageSize" value="${channel.pageSize!}" style="width:40px" class="digits" maxlength="5"/>
 </@p.td><@p.tr/>
 
 <#elseif item.field=="contentStatic">
 <@p.td label=item.label colspan="2" width="100">
-<label><input type="checkbox" onclick="$('#staticContent').val(this.checked)"<#if channel.staticContent> checked="checked"</#if>/><@s.m "channel.staticOn"/><input type="hidden" id="staticContent" name="staticContent" value="${channel.staticContent?string('true','false')}"/></label>
+<label><input type="checkbox" onclick="$('#staticContent').val(this.checked)"<#if channel.staticContent> checked="checked"</#if>/><@s.text name= "channel.staticOn"/><input type="hidden" id="staticContent" name="staticContent" value="${channel.staticContent?string('true','false')}"/></label>
 <input type="text" name="contentRule" value="${channel.contentRule!}" style="width:350px"/>
 </@p.td><@p.tr/>
 
@@ -87,29 +87,29 @@ $(function() {
 <#elseif item.field=="display">
 <@p.td required="true" help=item.help helpPosition="${item.helpPosition!2}" label=item.label colspan=item.single?string("2","1") width="${item.single?string(100,50)}">
 <@p.radio value=channel.display list={"true":"global.true","false":"global.false"} name=item.field />
-&nbsp; <label><input type="checkbox" onclick="$('#blank').val(this.checked);"<#if channel.blank> checked="checked"</#if>/><@s.m "channel.blank"/></label><input type="hidden" id="blank" name="blank" value="${channel.blank?string('true','false')}"/>
+&nbsp; <label><input type="checkbox" onclick="$('#blank').val(this.checked);"<#if channel.blank> checked="checked"</#if>/><@s.text name= "channel.blank"/></label><input type="hidden" id="blank" name="blank" value="${channel.blank?string('true','false')}"/>
 </@p.td><#if count%2==0><@p.tr/></#if>
 
 <#elseif item.field=="docImg">
 <@p.td label="channel.docTitleImg" colspan="1" width="50">
-<label><input type="checkbox" onclick="$('#hasTitleImg').val(this.checked);$('#ti').toggle(this.checked);"<#if channel.hasTitleImg> checked="checked"</#if>/><@s.m "global.have"/></label>
+<label><input type="checkbox" onclick="$('#hasTitleImg').val(this.checked);$('#ti').toggle(this.checked);"<#if channel.hasTitleImg> checked="checked"</#if>/><@s.text name= "global.have"/></label>
 <input type="hidden" id="hasTitleImg" name="hasTitleImg" value="${channel.hasTitleImg?string('true','false')}"/>
 <span id="ti"<#if !channel.hasTitleImg> style="display:none"</#if>>
-	<@s.m "global.width"/>: <input type="text" name="titleImgWidth" value="${channel.titleImgWidth}" class="required digits" style="width:50px"/>
-	<@s.m "global.height"/>: <input type="text" name="titleImgHeight" value="${channel.titleImgHeight}" class="required digits" style="width:50px"/>
+	<@s.text name= "global.width"/>: <input type="text" name="titleImgWidth" value="${channel.titleImgWidth}" class="required digits" style="width:50px"/>
+	<@s.text name= "global.height"/>: <input type="text" name="titleImgHeight" value="${channel.titleImgHeight}" class="required digits" style="width:50px"/>
 </span>
 </@p.td>
 <@p.td label="channel.docContentImg" colspan="1" width="50">
-<label><input type="checkbox" onclick="$('#hasContentImg').val(this.checked);$('#ci').toggle(this.checked);"<#if channel.hasContentImg> checked="checked"</#if>/><@s.m "global.have"/></label>
+<label><input type="checkbox" onclick="$('#hasContentImg').val(this.checked);$('#ci').toggle(this.checked);"<#if channel.hasContentImg> checked="checked"</#if>/><@s.text name= "global.have"/></label>
 <input type="hidden" id="hasContentImg" name="hasContentImg" value="${channel.hasContentImg?string('true','false')}"/>
 <span id="ci"<#if !channel.hasContentImg> style="display:none"</#if>>
-	<@s.m "global.width"/>: <input type="text" name="contentImgWidth" value="${channel.contentImgWidth}" class="required digits" style="width:50px"/>
-	<@s.m "global.height"/>: <input type="text" name="contentImgHeight" value="${channel.contentImgHeight}" class="required digits" style="width:50px"/>
+	<@s.text name= "global.width"/>: <input type="text" name="contentImgWidth" value="${channel.contentImgWidth}" class="required digits" style="width:50px"/>
+	<@s.text name= "global.height"/>: <input type="text" name="contentImgHeight" value="${channel.contentImgHeight}" class="required digits" style="width:50px"/>
 </span>
 </@p.td><@p.tr/>
 
 <#elseif item.field=="finalStep">
-<#assign h><#if item.help??>${item.help}<#else><@s.m "channel."+item.field+".help"/></#if></#assign>
+<#assign h><#if item.help??>${item.help}<#else><@s.text name= "channel."+item.field+".help"/></#if></#assign>
 <@p.text value=channel.finalStep maxlength="5" size="${item.size!12}" help="${h}" helpPosition="${item.helpPosition!2}" label=item.label name=item.field colspan=item.single?string("2","1") width="${item.single?string(100,50)}"/><#if count%2==0><@p.tr/></#if>
 
 <#elseif item.field=="afterCheck">
@@ -131,35 +131,35 @@ $(function() {
 <@p.checkboxlist valueList=userIds list=users listKey="id" listValue="username" help=item.help helpPosition="${item.helpPosition!2}" label=item.label name=item.field colspan=item.single?string("2","1") width="${item.single?string(100,50)}"/><#if count%2==0><@p.tr/></#if>
 
 <#elseif item.field=="link">
-<#assign h><#if item.help??>${item.help}<#else><@s.m "content."+item.field+".help"/></#if></#assign>
+<#assign h><#if item.help??>${item.help}<#else><@s.text name= "content."+item.field+".help"/></#if></#assign>
 <@p.text value=channel.link maxlength="255" size="${item.size!35}" help="${h}" helpPosition="${item.helpPosition!2}" label=item.label name=item.field colspan=item.single?string("2","1") width="${item.single?string(100,50)}"/><#if count%2==0><@p.tr/></#if>
 
 <#elseif item.field=="titleImg">
 <@p.td label=item.label colspan="1" width="50" noHeight="true">
-<@p.text id="uploadImgPath1" name="titleImg" value=channel.titleImg style="width:220px"/> <input type="button" value="<@s.m "imageupload.preview"/>" onclick="previewImg(1);" class="preview-button"/><br/>
+<@p.text id="uploadImgPath1" name="titleImg" value=channel.titleImg style="width:220px"/> <input type="button" value="<@s.text name= "imageupload.preview"/>" onclick="previewImg(1);" class="preview-button"/><br/>
 <span id="ufc1" style="position:relative">
 <input type='text' id='uploadFileText1' size="14"/>  
-<input class="browse" type='button' value='<@s.m "global.browse"/>'/>
+<input class="browse" type='button' value='<@s.text name= "global.browse"/>'/>
 <input onchange="$('#uploadFileText1').val(this.value)" size="14" type="file" id="uploadFile1" class="file-button"/>
 </span>
-<label><input type="checkbox" onclick="$('#mark1').val(this.checked);"/><@s.m "imageupload.mark"/></label><input type="hidden" id="mark1" value="false"/> <input type="button" value="<@s.m "imageupload.upload"/>" onclick="upload(1);" class="upload-button"/><br/>
-<@s.m "global.width"/>: <input type="text" id="zoomWidth1" value="${model.titleImgWidth}" size="5"/> <@s.m "global.height"/>: <input type="text" id="zoomHeight1" value="${model.titleImgHeight}" size="5"/> <input type="button" value="<@s.m "imageupload.cut"/>" onclick="imgCut(1);" class="cut-button"/> 
+<label><input type="checkbox" onclick="$('#mark1').val(this.checked);"/><@s.text name= "imageupload.mark"/></label><input type="hidden" id="mark1" value="false"/> <input type="button" value="<@s.text name= "imageupload.upload"/>" onclick="upload(1);" class="upload-button"/><br/>
+<@s.text name= "global.width"/>: <input type="text" id="zoomWidth1" value="${model.titleImgWidth}" size="5"/> <@s.text name= "global.height"/>: <input type="text" id="zoomHeight1" value="${model.titleImgHeight}" size="5"/> <input type="button" value="<@s.text name= "imageupload.cut"/>" onclick="imgCut(1);" class="cut-button"/> 
 </@p.td><@p.td colspan="1" width="50">
-<img id="preImg1" alt="<@s.m "imageupload.preview"/>" style="width:100px;height:70px;background-color:#CCCCCC;border:1px solid #333"/>
+<img id="preImg1" alt="<@s.text name= "imageupload.preview"/>" style="width:100px;height:70px;background-color:#CCCCCC;border:1px solid #333"/>
 </@p.td><@p.tr/>
 
 <#elseif item.field=="contentImg">
 <@p.td label=item.label colspan="1" width="50" noHeight="true">
-<@p.text id="uploadImgPath2" name="contentImg" value=channel.contentImg style="width:220px"/> <input type="button" value="<@s.m "imageupload.preview"/>" onclick="previewImg(2);" class="preview-button"/><br/>
+<@p.text id="uploadImgPath2" name="contentImg" value=channel.contentImg style="width:220px"/> <input type="button" value="<@s.text name= "imageupload.preview"/>" onclick="previewImg(2);" class="preview-button"/><br/>
 <span id="ufc2" style="position:relative">
 <input type='text' id='uploadFileText2' size="14"/>  
-<input class="browse" type='button' value='<@s.m "global.browse"/>'/>
+<input class="browse" type='button' value='<@s.text name= "global.browse"/>'/>
 <input onchange="$('#uploadFileText2').val(this.value)" size="14" type="file" id="uploadFile2" class="file-button"/>
 </span>
-<label><input type="checkbox" onclick="$('#mark2').val(this.checked);"/><@s.m "imageupload.mark"/></label><input type="hidden" id="mark2" value="false"/> <input type="button" value="<@s.m "imageupload.upload"/>" onclick="upload(2);" class="upload-button"/><br/>
-<@s.m "global.width"/>: <input type="text" id="zoomWidth2" value="${model.contentImgWidth}" size="5"/> <@s.m "global.height"/>: <input type="text" id="zoomHeight2" value="${model.contentImgHeight}" size="5"/> <input type="button" value="<@s.m "imageupload.cut"/>" onclick="imgCut(2);" class="cut-button"/> 
+<label><input type="checkbox" onclick="$('#mark2').val(this.checked);"/><@s.text name= "imageupload.mark"/></label><input type="hidden" id="mark2" value="false"/> <input type="button" value="<@s.text name= "imageupload.upload"/>" onclick="upload(2);" class="upload-button"/><br/>
+<@s.text name= "global.width"/>: <input type="text" id="zoomWidth2" value="${model.contentImgWidth}" size="5"/> <@s.text name= "global.height"/>: <input type="text" id="zoomHeight2" value="${model.contentImgHeight}" size="5"/> <input type="button" value="<@s.text name= "imageupload.cut"/>" onclick="imgCut(2);" class="cut-button"/> 
 </@p.td><@p.td colspan="1" width="50">
-<img id="preImg2" alt="<@s.m "imageupload.preview"/>" style="width:100px;height:70px;background-color:#CCCCCC;border:1px solid #333"/>
+<img id="preImg2" alt="<@s.text name= "imageupload.preview"/>" style="width:100px;height:70px;background-color:#CCCCCC;border:1px solid #333"/>
 </@p.td><@p.tr/>
 
 <#elseif item.field=="txt">

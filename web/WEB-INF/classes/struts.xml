@@ -37,10 +37,19 @@
 		<!-- <default-resultType-ref name="defaultStack"/> -->
 		<!-- <global-exception-mappings> <exception-mapping exception="java.lang.Exception" 
 			result="error" /> </global-exception-mappings> -->
-
-
+		<global-results>
+			<result name="input" type="redirectAction">
+				<param name="actionName">input</param>
+			</result>
+		</global-results>
+		<action name="input">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="store" />
+			<result name="loginui">/cms_sys/login.html</result>
+		</action>
 	</package>
-	<package name="admin_frame" namespace="/admin/main/frame" extends="admin">
+	<package name="admin_frame" namespace="/admin/main/frame"
+		extends="admin">
 		<action name="*">
 			<result>/cms_sys/frame/{1}.html</result>
 		</action>

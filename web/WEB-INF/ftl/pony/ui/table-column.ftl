@@ -10,7 +10,7 @@
 <#macro column title="" code="" width="" align="" class="" style="">
 <#if title="" && code=""><td>title and code all not assign!</td><#return></#if>
 <#if i==-1>
-	<th<#if width!=""> width="${width}"</#if><#if class!=""> class="${class}"</#if><#if style!=""> style="${style}"</#if>><#if title!="">${title}<#else><@s.mt code=code text=code/></#if></th><#rt/>
+	<th<#if width!=""> width="${width}"</#if><#if class!=""> class="${class}"</#if><#if style!=""> style="${style}"</#if>><#if title!="">${title}<#else><@ss.mt code=code text=code/></#if></th><#rt/>
 <#else>
 	<td<#if align!=""> align="${align}"</#if><#if class!=""> class="${class}"</#if><#if style!=""> style="${style}"</#if>><#nested/></td><#rt/>
 </#if>

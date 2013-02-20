@@ -8,7 +8,7 @@ import org.springframework.context.MessageSource;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class WebErrors extends com.qcms.common.web.springmvc.WebErrors {
+public class WebErrors extends com.qcms.common.web.struts.WebErrors {
 	/**
 	 * 默认错误页面
 	 */

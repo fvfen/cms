@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -22,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.octo.captcha.service.CaptchaServiceException;
 import com.octo.captcha.service.image.ImageCaptchaService;
-import com.opensymphony.xwork2.ActionContext;
 import com.qcms.cms.entity.main.CmsUser;
 import com.qcms.cms.manager.main.CmsUserMng;
 import com.qcms.common.security.DisabledException;
@@ -39,7 +37,7 @@ import com.qcms.core.web.WebErrors;
 @ParentPackage("admin")
 @Namespace("/admin/main")
 @Results({
-		@Result(name = "loginui", location = "/cms_sys/${location}"),
+		//@Result(name = "loginui", location = "/cms_sys/${location}"),
 		@Result(type="redirect",location = "${returnUrl}"),
 		@Result(name = "input", type = "redirectAction", params = {
 				"actionName", "input" }) })
@@ -58,14 +56,14 @@ public class CmsLoginAction extends BaseAction {
 	public static final String COOKIE_ERROR_REMAINING = "_error_remaining";
 
 	// @RequestMapping(value = "/login.do", method = RequestMethod.GET)
-	@Action(value = "input", results = { @Result(type = "redirectAction", params = {
+	/*@Action(value = "input", results = { @Result(type = "redirectAction", params = {
 			"returnUrl", "${returnUrl}" }) }, interceptorRefs = {
 			@InterceptorRef("defaultStack"),@InterceptorRef("store") })
 	public String input() {
 		ActionContext.getContext().getValueStack()
 				.set("location", "login.html");
 		return "loginui";
-	}
+	}*/
 
 	// @RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	@Action(value = "login")

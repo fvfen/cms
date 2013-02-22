@@ -7,7 +7,7 @@
 	onclick="" ondblclick="" onmousedown="" onmouseup="" onmouseover="" onmousemove="" onmouseout="" onfocus="" onblur="" onkeypress="" onkeydown="" onkeyup="" onselect="" onchange=""
 	>
 <input type="button"<#rt/>
-<#if value!=""> value="${value}"<#elseif code!=""> value="<@s.m code/>"</#if><#rt/>
+<#if value!=""> value="${value}"<#elseif code!=""> value="<@s.text name= code/>"</#if><#rt/>
 <#if id!=""> id="${id}"</#if><#rt/>
 <#include "common-attributes.ftl"/><#rt/>
 <#include "scripting-events.ftl"/><#rt/>
@@ -23,7 +23,7 @@
 	onclick="" ondblclick="" onmousedown="" onmouseup="" onmouseover="" onmousemove="" onmouseout="" onfocus="" onblur="" onkeypress="" onkeydown="" onkeyup="" onselect="" onchange=""
 	>
 <input type="submit"<#rt/>
-<#if value!=""> value="${value}"<#elseif code!=""> value="<@s.m code/>"</#if><#rt/>
+<#if value!=""> value="${value}"<#elseif code!=""> value="<@s.text name= code/>"</#if><#rt/>
 <#if id!=""> id="${id}"</#if><#rt/>
  class="${class}"<#rt/>
 <#include "common-attributes.ftl"/><#rt/>
@@ -40,7 +40,7 @@
 	onclick="" ondblclick="" onmousedown="" onmouseup="" onmouseover="" onmousemove="" onmouseout="" onfocus="" onblur="" onkeypress="" onkeydown="" onkeyup="" onselect="" onchange=""
 	>
 <input type="reset"<#rt/>
-<#if value!=""> value="${value}"<#elseif code!=""> value="<@s.m code/>"</#if><#rt/>
+<#if value!=""> value="${value}"<#elseif code!=""> value="<@s.text name= code/>"</#if><#rt/>
 <#if id!=""> id="${id}"</#if><#rt/>
  class="${class}"<#rt/>
 <#include "common-attributes.ftl"/><#rt/>

@@ -15,9 +15,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -53,7 +50,7 @@ public abstract class WebErrors {
 	 *            从request中获得MessageSource和Locale，如果存在的话。
 	 */
 	public WebErrors(HttpServletRequest request) {
-		WebApplicationContext webApplicationContext = RequestContextUtils
+	/*	WebApplicationContext webApplicationContext = RequestContextUtils
 				.getWebApplicationContext(request);
 		if (webApplicationContext != null) {
 			LocaleResolver localeResolver = RequestContextUtils
@@ -64,7 +61,7 @@ public abstract class WebErrors {
 				this.messageSource = webApplicationContext;
 				this.locale = locale;
 			}
-		}
+		}*/
 	}
 
 	public WebErrors() {

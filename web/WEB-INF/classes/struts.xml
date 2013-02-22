@@ -40,9 +40,10 @@
 		<global-results>
 			<result name="input" type="redirectAction">
 				<param name="actionName">input</param>
+				<param name="namespace">/admin</param>
 			</result>
 		</global-results>
-		<action name="input">
+		<action name="input" class="com.qcms.cms.action.admin.CmsLoginAction" method="input">
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="store" />
 			<result name="loginui">/cms_sys/login.html</result>

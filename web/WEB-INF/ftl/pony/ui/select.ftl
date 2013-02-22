@@ -17,7 +17,7 @@
 ><#rt/>
 <#if headerButtom=="false">
 <#if headerKey!="" || headerValue!="">
-	<option value="${headerKey}"<#if headerKey==value?string> selected="selected"</#if>><@s.mt code=headerValue text=headerValue/></option><#t/>
+	<option value="${headerKey}"<#if headerKey==value?string> selected="selected"</#if>><@ss.mt code=headerValue text=headerValue/></option><#t/>
 </#if>
 </#if>
 <#if list?is_sequence>
@@ -33,12 +33,12 @@
 	</#if>
 <#else>
 	<#list list?keys as key>
-		<option value="${key}"<#if key==value?string> selected="selected"</#if>><@s.mt code=list[key] text=list[key]/></option><#t/>
+		<option value="${key}"<#if key==value?string> selected="selected"</#if>><@ss.mt code=list[key] text=list[key]/></option><#t/>
 	</#list>
 </#if>
 <#if headerButtom!="false">
 <#if headerKey!="" || headerValue!="">
-	<option value="${headerKey}"<#if headerKey==value> selected="selected"</#if>><@s.mt code=headerValue text=headerValue/></option><#t/>
+	<option value="${headerKey}"<#if headerKey==value> selected="selected"</#if>><@ss.mt code=headerValue text=headerValue/></option><#t/>
 </#if>
 </#if>
 </select>

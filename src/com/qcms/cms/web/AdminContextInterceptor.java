@@ -312,7 +312,7 @@ public class AdminContextInterceptor implements Interceptor {
 	private AuthenticationMng authMng;
 	private CmsSiteMng cmsSiteMng;
 	private CmsUserMng cmsUserMng;
-	private Integer adminId;
+	private Integer adminId=1;
 	private boolean auth = true;
 	private String[] excludeUrls;
 

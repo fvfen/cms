@@ -59,11 +59,10 @@ public class CmsLoginAction extends BaseAction {
 	/*@Action(value = "input", results = { @Result(type = "redirectAction", params = {
 			"returnUrl", "${returnUrl}" }) }, interceptorRefs = {
 			@InterceptorRef("defaultStack"),@InterceptorRef("store") })
+			*/
 	public String input() {
-		ActionContext.getContext().getValueStack()
-				.set("location", "login.html");
 		return "loginui";
-	}*/
+	}
 
 	// @RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	@Action(value = "login")

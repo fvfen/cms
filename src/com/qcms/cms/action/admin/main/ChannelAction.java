@@ -47,17 +47,19 @@ public class ChannelAction extends BaseAction {
 	private static final long serialVersionUID = -8059311558463455891L;
 	private static final Logger log = LoggerFactory
 			.getLogger(ChannelAction.class);
+	private Integer root;
+	private Integer modelId;
 
-	@Action(value = "v_left")
+	@Action(value = "v_left", results = { @Result(name = "left", type = "freemarker", location = "/cms_sys/channel/left.html") })
 	public String left() {
 		return "left";
 	}
 
-	@Action(value = "v_tree",results={@Result(name = "tree", type = "freemarker", location = "/cms_sys/channel/tree.html") })
+	@Action(value = "v_tree", results = { @Result(name = "tree", type = "freemarker", location = "/cms_sys/channel/tree.html") })
 	public String tree() {
-		String root=httpReq.getParameter("root");
-		if (root==null) {
-			root="source";
+		String root = httpReq.getParameter("root");
+		if (root == null) {
+			root = "source";
 		}
 		log.debug("tree path={}", root);
 		boolean isRoot;
@@ -68,12 +70,12 @@ public class ChannelAction extends BaseAction {
 			isRoot = false;
 		}
 		setValue("isRoot", isRoot);
-		//WebErrors errors = validateTree(root, httpReq);
-		//if (errors.hasErrors()) {
-		//	log.error(errors.getErrors().get(0));
-		//	ResponseUtils.renderJson(httpResp, "[]");
-		//	return null;
-		//}
+		// WebErrors errors = validateTree(root, httpReq);
+		// if (errors.hasErrors()) {
+		// log.error(errors.getErrors().get(0));
+		// ResponseUtils.renderJson(httpResp, "[]");
+		// return null;
+		// }
 		List<Channel> list;
 		if (isRoot) {
 			CmsSite site = CmsUtils.getSite(httpReq);
@@ -107,15 +109,14 @@ public class ChannelAction extends BaseAction {
 		return "list";
 	}
 
-	@RequestMapping("/channel/v_add.do")
-	public String add(Integer root, Integer modelId,
-			HttpServletRequest request, ModelMap model) {
-		CmsSite site = CmsUtils.getSite(request);
+	@Action(value = "v_add", results = { @Result(name = "add", type = "freemarker", location = "/cms_sys/channel/add.html") })
+	public String add() {
+		CmsSite site = CmsUtils.getSite(httpReq);
 		Channel parent = null;
 		if (root != null) {
 			parent = manager.findById(root);
-			model.addAttribute("parent", parent);
-			model.addAttribute("root", root);
+			setValue("parent", parent);
+			setValue("root", root);
 		}
 		// 模型
 		CmsModel m = cmsModelMng.findById(modelId);
@@ -143,30 +144,38 @@ public class ChannelAction extends BaseAction {
 		} else {
 			users = cmsUserMng.getAdminList(site.getId(), false, false, null);
 		}
-		model.addAttribute("channelTplList", channelTplList);
-		model.addAttribute("contentTplList", contentTplList);
-		model.addAttribute("itemList", itemList);
-		model.addAttribute("viewGroups", viewGroups);
-		model.addAttribute("contriGroups", contriGroups);
-		model.addAttribute("contriGroupIds", CmsGroup.fetchIds(contriGroups));
-		model.addAttribute("users", users);
-		model.addAttribute("userIds", CmsUser.fetchIds(users));
-		model.addAttribute("model", m);
-		return "channel/add";
+		setValue("channelTplList", channelTplList);
+		setValue("contentTplList", contentTplList);
+		setValue("itemList", itemList);
+		setValue("viewGroups", viewGroups);
+		setValue("contriGroups", contriGroups);
+		setValue("contriGroupIds", CmsGroup.fetchIds(contriGroups));
+		setValue("users", users);
+		setValue("userIds", CmsUser.fetchIds(users));
+		setValue("model", m);
+		return "add";
 	}
 
-	@RequestMapping("/channel/v_edit.do")
+	/**
+	 * @return
+	 */
+	@Action(value = "v_edit", results = {
+			@Result(name = "error", type = "string", location = "message"),
+			@Result(name = "edit", type = "freemarker", location = "/cms_sys/channel/edit.html") })
 	public String edit() {
-		Integer id=null;
-		String i=httpReq.getParameter("id");
-		if (i!=null) {
-			id=Integer.parseInt(i);
+		Integer id = null;
+		String i = httpReq.getParameter("id");
+		if (i != null) {
+			id = Integer.parseInt(i);
+		} else {
+			setValue("message", "<script>alert('请求参数错误!请刷新重试')</script>");
+			return ERROR;
 		}
-		String root=httpReq.getParameter("root");
+		String root = httpReq.getParameter("root");
 		CmsSite site = CmsUtils.getSite(httpReq);
 		WebErrors errors = validateEdit(id, httpReq);
 		if (errors.hasErrors()) {
-			//return errors.showErrorPage(model);
+			// return errors.showErrorPage(model);
 		}
 		if (root != null) {
 			setValue("root", root);
@@ -238,19 +247,18 @@ public class ChannelAction extends BaseAction {
 		setValue("userIds", userIds);
 		setValue("channel", channel);
 		setValue("model", m);
-		return "channel/edit";
+		return "edit";
 	}
 
-	@RequestMapping("/channel/o_save.do")
+	@Action("o_save")
 	public String save(Integer root, Channel bean, ChannelExt ext,
 			ChannelTxt txt, Integer[] viewGroupIds, Integer[] contriGroupIds,
-			Integer[] userIds, Integer modelId, HttpServletRequest request,
-			ModelMap model) {
-		WebErrors errors = validateSave(bean, request);
+			Integer[] userIds) {
+		WebErrors errors = validateSave(bean, httpReq);
 		if (errors.hasErrors()) {
-			return errors.showErrorPage(model);
+			//return errors.showErrorPage(model);
 		}
-		CmsSite site = CmsUtils.getSite(request);
+		CmsSite site = CmsUtils.getSite(httpReq);
 		// 加上模板前缀
 		String tplPath = site.getTplPath();
 		if (!StringUtils.isBlank(ext.getTplChannel())) {
@@ -259,13 +267,13 @@ public class ChannelAction extends BaseAction {
 		if (!StringUtils.isBlank(ext.getTplContent())) {
 			ext.setTplContent(tplPath + ext.getTplContent());
 		}
-		bean.setAttr(RequestUtils.getRequestMap(request, "attr_"));
+		bean.setAttr(RequestUtils.getRequestMap(httpReq, "attr_"));
 		bean = manager.save(bean, ext, txt, viewGroupIds, contriGroupIds,
-				userIds, CmsUtils.getSiteId(request), root, modelId);
+				userIds, CmsUtils.getSiteId(httpReq), root, modelId);
 		log.info("save Channel id={}, name={}", bean.getId(), bean.getName());
-		cmsLogMng.operating(request, "channel.log.save", "id=" + bean.getId()
+		cmsLogMng.operating(httpReq, "channel.log.save", "id=" + bean.getId()
 				+ ";title=" + bean.getTitle());
-		model.addAttribute("root", root);
+		setValue("root", root);
 		return "redirect:v_list.do";
 	}
 
@@ -338,11 +346,12 @@ public class ChannelAction extends BaseAction {
 		return CoreUtils.tplTrim(tplList, site.getTplPath(), tpl);
 	}
 
+	@SuppressWarnings("unused")
 	private WebErrors validateTree(String path, HttpServletRequest request) {
 		WebErrors errors = WebErrors.create(request);
-		 if (errors.ifBlank(path, "path", 255)) {
-		 return errors;
-		 }
+		if (errors.ifBlank(path, "path", 255)) {
+			return errors;
+		}
 		return errors;
 	}
 
@@ -443,4 +452,20 @@ public class ChannelAction extends BaseAction {
 	private CmsLogMng cmsLogMng;
 	@Autowired
 	private ChannelMng manager;
+
+	public Integer getRoot() {
+		return root;
+	}
+
+	public void setRoot(Integer root) {
+		this.root = root;
+	}
+
+	public Integer getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(Integer modelId) {
+		this.modelId = modelId;
+	}
 }

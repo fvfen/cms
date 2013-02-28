@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.action.extension" value="action,do,jhtm" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.custom.i18n.resources"
+		value="languages.core_admin.messages,languages.cms_admin.messages,languages.cms_tpl.messages,languages.fck.messages,languages.cms_front.messages"></constant>
+	<constant name="struts.freemarker.manager.classname" value="freemarkerManager" />
+	<package name="default" extends="convention-default"></package>
+	<package name="admin" namespace="/admin" extends="default">
+		<result-types>
+			<result-type name="freemarker"
+				class="org.apache.struts2.views.freemarker.FreemarkerResult"
+				default="true">
+			</result-type>
+			<result-type name="string" class="com.qcms.cms.result.StringResult" />
+		</result-types>
+		<interceptors>
+			<interceptor name="adminContextInterceptor" class="adminContextInterceptor" />
+			<interceptor name="adminLocaleInterceptor" class="adminLocaleInterceptor" />
+			<interceptor-stack name="admin-default-interceptor">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="adminContextInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="admin-default-interceptor" />
+		<!-- <result-types> <result-type name="string" class="com.ekezhan.struts.result.StringResult"> 
+			</result-type> </result-types> -->
+		<!-- <default-resultType-ref name="defaultStack"/> -->
+		<!-- <global-exception-mappings> <exception-mapping exception="java.lang.Exception" 
+			result="error" /> </global-exception-mappings> -->
+		<global-results>
+			<result name="input" type="redirectAction">
+				<param name="actionName">input</param>
+				<param name="namespace">/admin</param>
+			</result>
+		</global-results>
+		<action name="input" class="com.qcms.cms.action.admin.CmsLoginAction" method="input">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="store" />
+			<result name="loginui">/cms_sys/login.html</result>
+		</action>
+	</package>
+	<package name="admin_frame" namespace="/admin/main/frame"
+		extends="admin">
+		<action name="*">
+			<result>/cms_sys/frame/{1}.html</result>
+		</action>
+	</package>
+</struts>
